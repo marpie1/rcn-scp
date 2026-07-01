@@ -17,4 +17,4 @@ fi
 exec wiki \
   --port "${WIKI_PORT:-3000}" \
   --data "${WIKI_DATA_DIR:-/wiki-data}" \
-  --security_type open
+  --security_type friends
