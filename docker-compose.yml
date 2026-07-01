@@ -1,8 +1,6 @@
 services:
   wiki:
-    build:
-      context: wiki
-      dockerfile: Dockerfile
+    image: ghcr.io/marpie1/rcn-scp-wiki:latest
     ports:
       - "${WIKI_PORT:-3000}:3000"
     volumes:
@@ -13,9 +11,7 @@ services:
     restart: unless-stopped
 
   groove:
-    build:
-      context: groove
-      dockerfile: Dockerfile
+    image: ghcr.io/marpie1/rcn-scp-groove:latest
     ports:
       - "${GROOVE_PORT:-3001}:3001"
     environment:
@@ -24,9 +20,7 @@ services:
     restart: unless-stopped
 
   proxy:
-    build:
-      context: proxy
-      dockerfile: Dockerfile
+    image: ghcr.io/marpie1/rcn-scp-proxy:latest
     ports:
       - "${PROXY_PORT:-8765}:8765"
     volumes:

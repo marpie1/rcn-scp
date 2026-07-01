@@ -1,42 +1,42 @@
 # WikiCafé Admin Guide — Shared Care Plan & Groove
 
 **Version:** 1.0  
+**Docker images:** `ghcr.io/marpie1/rcn-scp-wiki`, `ghcr.io/marpie1/rcn-scp-groove`, `ghcr.io/marpie1/rcn-scp-proxy`  
 **GitHub:** https://github.com/marpie1/rcn-scp  
-**Contact:** Marc Pierson / RCN
+**Contact:** Marc Pierson / Relocalizing Creativity Network
 
 ---
 
 ## Overview
 
-This guide walks you through deploying the **Shared Care Plan (SCP)** and **Groove** workspace on a WikiCafé server. The deployment consists of three Docker containers managed by Docker Compose.
+This deployment runs three Docker containers managed by Docker Compose. Pre-built images are hosted on GitHub Container Registry — no build step required.
 
-| Container | Internal Port | Purpose |
-|-----------|--------------|---------|
-| `wiki`    | 3000 | FedWiki server with all SCP plugins |
-| `groove`  | 3001 | Groove Networks collaboration workspace |
-| `proxy`   | 8765 | API proxy — Anthropic AI + FedWiki page operations |
+| Container | Image | Internal Port | Purpose |
+|-----------|-------|--------------|---------|
+| `wiki`    | `ghcr.io/marpie1/rcn-scp-wiki` | 3000 | FedWiki server with all SCP plugins |
+| `groove`  | `ghcr.io/marpie1/rcn-scp-groove` | 3001 | Groove Networks collaboration workspace |
+| `proxy`   | `ghcr.io/marpie1/rcn-scp-proxy` | 8765 | API proxy — Anthropic AI + FedWiki page operations |
 
-**Authentication model:** Your existing WikiCafé reverse proxy (nginx) handles login. These containers run behind it and do not need to enforce their own authentication for viewing. FedWiki's built-in `friends` security controls who can *edit* pages — the assigned Community Health Worker (CHW) claims their wiki instance on first setup (see step 5 below).
+**Authentication model:** Your existing WikiCafé reverse proxy handles login — these containers run behind it. FedWiki's built-in `friends` security controls who can *edit* pages; the assigned CHW claims their wiki instance on first setup (see step 4).
 
 ---
 
 ## Prerequisites
 
-- Docker Engine 24+ and Docker Compose V2 (`docker compose` not `docker-compose`)
-- Git
-- An Anthropic API key (for the AI pre-visit chat feature) — get one at https://console.anthropic.com/
-- Your reverse proxy configured to forward traffic to the ports above (see [Reverse Proxy Setup](#reverse-proxy-setup))
+- Docker Engine 24+ and Docker Compose V2
+- An Anthropic API key (for AI pre-visit chat) — https://console.anthropic.com/
+- Git (only to get the `docker-compose.yml` and seed files)
 
 ---
 
-## 1. Clone the repository
+## 1. Get the deployment files
 
 ```bash
 git clone https://github.com/marpie1/rcn-scp.git
 cd rcn-scp
 ```
 
-This is the canonical source. There is no pre-built Docker Hub image — you build from source so you can audit exactly what runs on your server.
+You only need the repo for the `docker-compose.yml`, `.env.example`, and `seeds/` folder. The Docker images themselves are pulled automatically.
 
 ---
 
@@ -44,7 +44,7 @@ This is the canonical source. There is no pre-built Docker Hub image — you bui
 
 ```bash
 cp .env.example .env
-nano .env  # or your preferred editor
+nano .env
 ```
 
 Set your Anthropic API key:
@@ -53,13 +53,13 @@ Set your Anthropic API key:
 ANTHROPIC_API_KEY=sk-ant-your-key-here
 ```
 
-Optionally set a secret to protect the proxy's API endpoints from unauthenticated local calls:
+Optionally protect the proxy endpoints with a bearer token:
 
 ```env
 SODOTO_PROXY_SECRET=choose-a-random-string
 ```
 
-If your reverse proxy uses non-default ports, override them here:
+To use non-default ports:
 
 ```env
 WIKI_PORT=3000
@@ -69,65 +69,54 @@ PROXY_PORT=8765
 
 ---
 
-## 3. Build and start
+## 3. Start
 
 ```bash
-docker compose up --build -d
+docker compose up -d
 ```
 
-The first build takes 3–5 minutes (downloading base images and installing dependencies). Subsequent starts are fast.
+Docker pulls the three pre-built images from `ghcr.io/marpie1/` and starts the containers. First pull takes 1–2 minutes; subsequent starts are near-instant.
 
-**On first start**, the wiki container seeds 13 blank patient pages:
+**On first start**, the wiki container seeds 13 blank patient pages into the `wiki-data` volume:
 
 - About Me · Medications · Vitals · Symptoms · Visits
 - Providers · Care Team · Diagnoses · Allergies & Reactions
 - Medical History · Next Steps · Medical Directives · Health Log
 
-These pages are written to a Docker named volume (`wiki-data`) and are **never overwritten** on subsequent restarts.
+These pages are **never overwritten** on subsequent restarts.
 
 ---
 
-## 4. Verify the containers are running
+## 4. Verify
 
 ```bash
 docker compose ps
 ```
 
-Expected output — all three containers should show `Up`:
-
-```
-NAME                 STATUS    PORTS
-rcn-scp-wiki-1      Up        0.0.0.0:3000->3000/tcp
-rcn-scp-groove-1    Up        0.0.0.0:3001->3001/tcp
-rcn-scp-proxy-1     Up        0.0.0.0:8765->8765/tcp
-```
-
-Check the wiki log to confirm SCP plugins loaded:
+All three should show `Up`. Check that SCP plugins loaded in the wiki:
 
 ```bash
 docker logs rcn-scp-wiki-1 | grep "starting plugin"
 ```
 
-You should see `wiki-plugin-scp-medication` and `wiki-plugin-scp-factory` in the list.
+Look for `wiki-plugin-scp-medication` and `wiki-plugin-scp-factory`.
 
 ---
 
 ## 5. First-time wiki setup — CHW claims the site
 
-The wiki uses FedWiki's `friends` security model: anyone who reaches the URL can read pages; editing requires the assigned user to *claim* the site.
-
 1. Open the wiki in a browser (via your reverse proxy URL)
-2. Click the padlock icon in the top-right corner
+2. Click the padlock icon (top-right corner)
 3. Select **"Claim this wiki"** and follow the prompts
-4. The CHW is now the owner and can add and edit entries
+4. The CHW is now the owner and can add/edit entries
 
-This step is done once per patient deployment.
+Done once per patient deployment.
 
 ---
 
-## 6. Reverse proxy setup
+## 6. Reverse proxy
 
-Point your nginx (or other reverse proxy) at the three container ports. Example nginx location blocks:
+Point your nginx at the container ports. Example:
 
 ```nginx
 # Shared Care Plan wiki
@@ -150,20 +139,20 @@ location /groove/ {
     proxy_set_header   X-Real-IP $remote_addr;
 }
 
-# Proxy (AI + page operations) — keep this internal or behind auth
+# API proxy (AI + page operations)
 location /api/ {
     proxy_pass         http://127.0.0.1:8765/api/;
     proxy_set_header   Host $host;
 }
 ```
 
-Your existing WikiCafé authentication wrapper applies to these locations in the usual way — no changes needed to the Docker setup.
+Your existing WikiCafé authentication wrapper applies at this layer — no changes to Docker needed.
 
 ---
 
-## 7. Patient data and backups
+## 7. Backups
 
-All wiki page data is stored in the `wiki-data` Docker volume. To back it up:
+Patient data lives in the `wiki-data` Docker volume. To back up:
 
 ```bash
 docker run --rm \
@@ -172,49 +161,47 @@ docker run --rm \
   alpine tar czf /backup/wiki-data-$(date +%Y%m%d).tar.gz -C /data .
 ```
 
-To restore from a backup, stop the stack, extract into the volume, and restart.
-
 ---
 
 ## 8. Multiple patients
 
-Each patient needs their own stack with a separate data volume. The recommended approach is separate compose projects:
+Run a separate compose project per patient, each with different ports:
 
 ```bash
-# Patient A
+# Copy the repo folder for each patient
 cp -r rcn-scp patient-a && cd patient-a
-# Edit .env: set WIKI_PORT=3000, GROOVE_PORT=3001, PROXY_PORT=8765
+# Edit .env: WIKI_PORT=3000, GROOVE_PORT=3001, PROXY_PORT=8765
 docker compose -p patient-a up -d
 
-# Patient B
 cp -r rcn-scp patient-b && cd patient-b
-# Edit .env: set WIKI_PORT=3100, GROOVE_PORT=3101, PROXY_PORT=8865
+# Edit .env: WIKI_PORT=3100, GROOVE_PORT=3101, PROXY_PORT=8865
 docker compose -p patient-b up -d
 ```
 
-Each project gets its own `wiki-data` volume automatically.
+Each project gets its own isolated `wiki-data` volume.
 
 ---
 
-## 9. Updating
+## 9. Updating to a new version
 
 ```bash
 cd rcn-scp
-git pull
-docker compose up --build -d
+git pull                        # get latest docker-compose.yml and seeds
+docker compose pull             # pull updated images from ghcr.io
+docker compose up -d            # restart containers with new images
 ```
 
-Patient data in the `wiki-data` volume is unaffected by image rebuilds. The seed pages are only written on first start (when pages don't already exist), so updates will never overwrite patient data.
+Patient data in the volume is never touched by updates.
 
 ---
 
-## 10. Stopping and removing
+## 10. Stopping
 
 ```bash
-# Stop containers (data preserved)
+# Stop (data preserved)
 docker compose down
 
-# Stop and remove data volume (CAUTION: deletes all patient data)
+# Stop and delete all patient data — CAUTION
 docker compose down -v
 ```
 
@@ -222,34 +209,29 @@ docker compose down -v
 
 ## Troubleshooting
 
-**Wiki won't start:**
+**Wiki won't start** — check logs:
 ```bash
 docker logs rcn-scp-wiki-1
 ```
-Most common cause: port already in use. Change `WIKI_PORT` in `.env`.
 
-**Plugins not loading:**
-```bash
-docker logs rcn-scp-wiki-1 | grep "starting plugin"
-```
-If `wiki-plugin-scp-medication` is missing, rebuild: `docker compose up --build -d`
-
-**AI chat not working:**
-Check that `ANTHROPIC_API_KEY` is set in `.env` and the proxy container is running:
+**AI chat not working** — verify `ANTHROPIC_API_KEY` is set in `.env`, then:
 ```bash
 docker logs rcn-scp-proxy-1
 ```
 
-**Groove not connecting to wiki:**
-The containers communicate internally by service name. If you see connection errors in Groove logs, verify both containers are on the same Docker network:
-```bash
-docker network inspect rcn-scp_default
-```
+**Port conflict** — change the relevant `_PORT` variable in `.env` and restart.
 
 ---
 
-## Source & support
+## Image registry
 
-- **GitHub:** https://github.com/marpie1/rcn-scp
-- **Groove repo:** https://github.com/marpie1/rcn-groove
-- **Contact:** Marc Pierson, Relocalizing Creativity Network
+All images are public on GitHub Container Registry:
+
+```
+ghcr.io/marpie1/rcn-scp-wiki:latest
+ghcr.io/marpie1/rcn-scp-groove:latest
+ghcr.io/marpie1/rcn-scp-proxy:latest
+```
+
+Source code and Dockerfiles: https://github.com/marpie1/rcn-scp  
+Contact: Marc Pierson, Relocalizing Creativity Network
