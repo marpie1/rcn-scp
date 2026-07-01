@@ -1,0 +1,14 @@
+{
+  "title": "Medications",
+  "story": [
+    {
+      "type": "scp-factory",
+      "id": "factory-medications",
+      "position": "top",
+      "types": ["scp-medication"]
+    }
+  ],
+  "journal": [
+    {"type": "create", "date": 1000000000000, "item": {"title": "Medications"}}
+  ]
+}

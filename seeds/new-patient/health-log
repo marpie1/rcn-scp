@@ -1,0 +1,7 @@
+{
+  "title": "Health Log",
+  "story": [],
+  "journal": [
+    {"type": "create", "date": 1000000000000, "item": {"title": "Health Log"}}
+  ]
+}

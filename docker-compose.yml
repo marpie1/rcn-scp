@@ -1,0 +1,41 @@
+services:
+  wiki:
+    build:
+      context: wiki
+      dockerfile: Dockerfile
+    ports:
+      - "${WIKI_PORT:-3000}:3000"
+    volumes:
+      - wiki-data:/wiki-data
+      - ./seeds:/seeds:ro
+    environment:
+      - WIKI_DATA_DIR=/wiki-data
+    restart: unless-stopped
+
+  groove:
+    build:
+      context: groove
+      dockerfile: Dockerfile
+    ports:
+      - "${GROOVE_PORT:-3001}:3001"
+    environment:
+      - PORT=3001
+      - FEDWIKI_BASE_URL=http://wiki:3000
+    restart: unless-stopped
+
+  proxy:
+    build:
+      context: proxy
+      dockerfile: Dockerfile
+    ports:
+      - "${PROXY_PORT:-8765}:8765"
+    volumes:
+      - wiki-data:/wiki-data
+    environment:
+      - WIKI_DATA_DIR=/wiki-data
+      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY}
+      - SODOTO_PROXY_SECRET=${SODOTO_PROXY_SECRET:-}
+    restart: unless-stopped
+
+volumes:
+  wiki-data:

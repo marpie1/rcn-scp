@@ -1,0 +1,18 @@
+{
+  "title": "About Me",
+  "story": [
+    {
+      "type": "paragraph",
+      "id": "about-intro",
+      "text": "Personal information for this Shared Care Plan."
+    },
+    {
+      "type": "scp-factory",
+      "id": "factory-about",
+      "types": ["scp-about"]
+    }
+  ],
+  "journal": [
+    {"type": "create", "date": 1000000000000, "item": {"title": "About Me"}}
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "title": "Care Team",
+  "story": [
+    {
+      "type": "paragraph",
+      "id": "careteam-intro",
+      "text": "Community and family members who support this patient's health."
+    },
+    {
+      "type": "scp-factory",
+      "id": "factory-careteam",
+      "types": ["scp-care-member"]
+    }
+  ],
+  "journal": [
+    {"type": "create", "date": 1000000000000, "item": {"title": "Care Team"}}
+  ]
+}

@@ -1,0 +1,16 @@
+FROM node:18-alpine
+
+WORKDIR /app
+
+COPY package.json package-lock.json ./
+RUN npm ci --omit=dev
+
+COPY server ./server
+COPY public ./public
+
+EXPOSE 3001
+
+ENV PORT=3001
+ENV FEDWIKI_BASE_URL=http://localhost:3000
+
+CMD ["node", "server/index.js"]

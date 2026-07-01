@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Groove Workspace</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <div id="app">
+
+    <!-- Sidebar -->
+    <aside id="sidebar">
+      <div class="sidebar-header">
+        <h1>Groove</h1>
+        <span class="version">v0.2</span>
+      </div>
+
+      <!-- Identity -->
+      <section class="sidebar-section" id="identity-section">
+        <h2>Identity</h2>
+        <div id="current-identity" class="identity-display">
+          <span class="no-identity">No identity</span>
+        </div>
+        <div class="input-row">
+          <input type="text" id="identity-name" placeholder="Your name" />
+          <button id="create-identity-btn">Create</button>
+        </div>
+      </section>
+
+      <!-- SCP Templates -->
+      <section class="sidebar-section">
+        <h2>SCP Pages</h2>
+        <ul id="templates-list" class="item-list"></ul>
+      </section>
+
+      <!-- Pages -->
+      <section class="sidebar-section">
+        <h2>FedWiki Pages</h2>
+        <div class="input-row">
+          <input type="text" id="fedwiki-url" placeholder="FedWiki page URL" />
+          <button id="import-btn">Import</button>
+        </div>
+        <ul id="pages-list" class="item-list"></ul>
+      </section>
+
+      <!-- Discussions -->
+      <section class="sidebar-section">
+        <h2>Discussions</h2>
+        <div class="input-row">
+          <input type="text" id="discussion-name" placeholder="Discussion name" />
+          <button id="create-discussion-btn">Create</button>
+        </div>
+        <ul id="discussions-list" class="item-list"></ul>
+      </section>
+
+      <!-- Privacy -->
+      <section class="sidebar-section">
+        <h2>Privacy</h2>
+        <button id="privacy-btn" class="privacy-sidebar-btn" onclick="App.openPrivacy()">
+          View Privacy Summary
+        </button>
+      </section>
+    </aside>
+
+    <!-- Main content -->
+    <main id="content">
+      <div id="welcome" class="welcome-panel">
+        <h2>Groove Workspace</h2>
+        <p>Private collaboration with FedWiki integration.</p>
+        <ul class="feature-list">
+          <li>Import FedWiki pages from any wiki</li>
+          <li>Create threaded discussions linked to pages</li>
+          <li>Export pages back to FedWiki</li>
+          <li>Person-controlled access (coming next)</li>
+        </ul>
+        <p class="hint">Create an identity to get started, or import a FedWiki page.</p>
+      </div>
+      <div id="main-panels" class="hidden">
+        <div id="page-panel">
+          <div id="page-tabs" class="hidden"></div>
+          <div id="page-view"></div>
+        </div>
+        <div id="discussion-panel" class="hidden">
+          <div id="discussion-view"></div>
+        </div>
+      </div>
+      <div id="privacy-panel" class="hidden"></div>
+    </main>
+
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <script src="/js/api.js"></script>
+  <script src="/js/identity-ui.js"></script>
+  <script src="/js/page-viewer.js"></script>
+  <script src="/js/discussion-ui.js"></script>
+  <script src="/js/privacy-ui.js"></script>
+  <script src="/js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,18 @@
+{
+  "title": "Next Steps",
+  "story": [
+    {
+      "type": "paragraph",
+      "id": "steps-intro",
+      "text": "Action items and care plan tasks. Status: Planned, In Progress, Done."
+    },
+    {
+      "type": "scp-factory",
+      "id": "factory-steps",
+      "types": ["scp-next-step"]
+    }
+  ],
+  "journal": [
+    {"type": "create", "date": 1000000000000, "item": {"title": "Next Steps"}}
+  ]
+}

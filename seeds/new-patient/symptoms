@@ -1,0 +1,14 @@
+{
+  "title": "Symptoms",
+  "story": [
+    {
+      "type": "scp-factory",
+      "id": "factory-symptoms",
+      "position": "top",
+      "types": ["scp-symptom"]
+    }
+  ],
+  "journal": [
+    {"type": "create", "date": 1000000000000, "item": {"title": "Symptoms"}}
+  ]
+}

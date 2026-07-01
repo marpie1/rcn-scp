@@ -1,0 +1,359 @@
+{
+  "_comment": "SCP 2.0 FedWiki page templates. Each entry defines a complete FedWiki page JSON for one section of the Shared Care Plan. Item types prefixed with 'scp-' are custom Groove/SCP plugin types. Standard FedWiki 'paragraph' items provide human-readable narrative.",
+
+  "pages": [
+
+    {
+      "slug": "about-me",
+      "title": "About Me",
+      "fhir": "Patient",
+      "story": [
+        { "type": "paragraph", "id": "aboutme0000000001",
+          "text": "This section is for you to record important details about your health and life that will help healthcare professionals understand your needs." },
+        { "type": "scp-text", "id": "aboutme0000000002",
+          "key": "mostImportantInfo",
+          "label": "This is the most important information you need to know about me",
+          "value": "",
+          "writtenByOther": false },
+        { "type": "scp-checklist", "id": "aboutme0000000003",
+          "key": "challenges",
+          "label": "I have challenges with",
+          "options": ["Vision", "Hearing", "Speech", "Mobility", "Transportation", "Other"],
+          "selected": [],
+          "comments": "" },
+        { "type": "scp-field", "id": "aboutme0000000004",
+          "key": "primaryLanguage",
+          "label": "My primary language is",
+          "value": "",
+          "comments": "" },
+        { "type": "scp-field", "id": "aboutme0000000005",
+          "key": "bloodType",
+          "label": "My blood type is",
+          "value": "" },
+        { "type": "scp-field", "id": "aboutme0000000006",
+          "key": "dietaryNeeds",
+          "label": "I have special dietary needs",
+          "value": "",
+          "comments": "" },
+        { "type": "scp-field", "id": "aboutme0000000007",
+          "key": "spirituality",
+          "label": "My religion/spirituality impacts my health care",
+          "value": "",
+          "comments": "" },
+        { "type": "scp-checklist", "id": "aboutme0000000008",
+          "key": "legalDocs",
+          "label": "I have",
+          "options": ["Advance Directives", "POLST", "Power of Attorney"],
+          "selected": [],
+          "comments": "" },
+        { "type": "scp-field", "id": "aboutme0000000009",
+          "key": "retirementCommunity",
+          "label": "I live in a retirement community",
+          "value": "",
+          "comments": "" },
+        { "type": "scp-list", "id": "aboutme0000000010",
+          "key": "learnBestBy",
+          "label": "I learn best by",
+          "items": [] }
+      ],
+      "journal": [
+        { "type": "create", "item": { "title": "About Me", "story": [] }, "date": 0 }
+      ]
+    },
+
+    {
+      "slug": "care-team",
+      "title": "Care Team",
+      "fhir": "CareTeam + Practitioner + RelatedPerson",
+      "story": [
+        { "type": "paragraph", "id": "careteam000000001",
+          "text": "Your Emergency Contact is the person you would like called first should you have an emergency. Your Backup Emergency Contact is called if your primary is unavailable." },
+        { "type": "scp-emergency-contact", "id": "careteam000000002",
+          "role": "primary",
+          "name": "",
+          "phone": "",
+          "alternatePhone": "" },
+        { "type": "scp-emergency-contact", "id": "careteam000000003",
+          "role": "backup",
+          "name": "",
+          "phone": "",
+          "alternatePhone": "" },
+        { "type": "paragraph", "id": "careteam000000004",
+          "text": "Care Team Members are people and/or organizations who help you manage your health. Anyone who you feel has a role in your health." },
+        { "type": "scp-care-team-member", "id": "careteam000000005",
+          "name": "",
+          "contact": "",
+          "role": "",
+          "accessLevel": "Fully Edit",
+          "comments": "",
+          "appointments": false,
+          "private": false }
+      ],
+      "journal": [
+        { "type": "create", "item": { "title": "Care Team", "story": [] }, "date": 0 }
+      ]
+    },
+
+    {
+      "slug": "diagnoses",
+      "title": "Diagnoses",
+      "fhir": "Condition (active)",
+      "story": [
+        { "type": "paragraph", "id": "diagnoses00000001",
+          "text": "My Chronic and Long-Term Diagnoses. This is a list of all the conditions you have been diagnosed with and are managing." },
+        { "type": "scp-diagnosis", "id": "diagnoses00000002",
+          "diagnosis": "",
+          "description": "",
+          "dateDiagnosed": "",
+          "diagnosedBy": "",
+          "comments": "",
+          "private": false }
+      ],
+      "journal": [
+        { "type": "create", "item": { "title": "Diagnoses", "story": [] }, "date": 0 }
+      ]
+    },
+
+    {
+      "slug": "next-steps",
+      "title": "Next Steps",
+      "fhir": "Goal + CarePlan",
+      "story": [
+        { "type": "paragraph", "id": "nextsteps00000001",
+          "text": "Where I am — My concerns. This section helps you identify the types of problems or concerns you are currently facing as you manage your health." },
+        { "type": "scp-concerns", "id": "nextsteps00000002",
+          "key": "concerns",
+          "label": "Current concerns",
+          "options": [
+            "My ability to manage my chronic conditions",
+            "Thinking or memory problems",
+            "Family issues",
+            "Access to health care",
+            "Emotional issues",
+            "Financial issues",
+            "End of life issues",
+            "Spiritual support",
+            "Other"
+          ],
+          "selected": [],
+          "otherDetails": "" },
+        { "type": "paragraph", "id": "nextsteps00000003",
+          "text": "Where I want to be — Life goals. A life goal is a motivating reason you are working toward better health." },
+        { "type": "scp-goal", "id": "nextsteps00000004",
+          "description": "",
+          "achieved": false },
+        { "type": "paragraph", "id": "nextsteps00000005",
+          "text": "How I'm getting there — Next steps. Next Steps can be small, short-term steps that you are ready and willing to take toward obtaining your goals." },
+        { "type": "scp-next-step", "id": "nextsteps00000006",
+          "date": "",
+          "goal": "",
+          "action": "" }
+      ],
+      "journal": [
+        { "type": "create", "item": { "title": "Next Steps", "story": [] }, "date": 0 }
+      ]
+    },
+
+    {
+      "slug": "health-log",
+      "title": "Health Log",
+      "fhir": "Observation",
+      "story": [
+        { "type": "paragraph", "id": "healthlog00000001",
+          "text": "Health Indicators. This is the place to record health indicators such as blood pressure, cholesterol and weight, the goal values that you want to reach or maintain, and to monitor them over time." },
+        { "type": "scp-health-indicator", "id": "healthlog00000002",
+          "name": "Blood Pressure",
+          "goal": "119 over 79 or below",
+          "unit": "mmHg",
+          "readings": [] },
+        { "type": "scp-health-indicator", "id": "healthlog00000003",
+          "name": "HbA1c",
+          "goal": "Less than 7%",
+          "unit": "%",
+          "readings": [] }
+      ],
+      "journal": [
+        { "type": "create", "item": { "title": "Health Log", "story": [] }, "date": 0 }
+      ]
+    },
+
+    {
+      "slug": "medications",
+      "title": "Medications",
+      "fhir": "MedicationStatement",
+      "story": [
+        { "type": "paragraph", "id": "meds000000000001",
+          "text": "Prescribed Medications. These are medications that a healthcare professional has advised you to take, including vitamins and supplements available over-the-counter. When you remove a medication you are no longer taking, it will still be visible on the My Discontinued Meds page." },
+        { "type": "scp-medication", "id": "meds000000000002",
+          "medicationType": "prescribed",
+          "startDate": "",
+          "rxBy": "",
+          "brandGenericName": "",
+          "strength": "",
+          "directions": "",
+          "use": "",
+          "timing": { "breakfast": false, "lunch": false, "dinner": false, "night": false },
+          "notTakingAsPrescribed": false,
+          "notTakingReason": "",
+          "private": false },
+        { "type": "paragraph", "id": "meds000000000003",
+          "text": "Additional Medications. Add here any other medications you are taking that no health care professional has advised you to take, including herbal supplements, vitamins, etc. Be sure to include medications you only take occasionally such as ibuprofen, cough suppressant or decongestant." },
+        { "type": "scp-medication", "id": "meds000000000004",
+          "medicationType": "additional",
+          "startDate": "",
+          "rxBy": "",
+          "brandGenericName": "",
+          "strength": "",
+          "directions": "",
+          "use": "",
+          "timing": { "breakfast": false, "lunch": false, "dinner": false, "night": false },
+          "private": false }
+      ],
+      "journal": [
+        { "type": "create", "item": { "title": "Medications", "story": [] }, "date": 0 }
+      ]
+    },
+
+    {
+      "slug": "reactions",
+      "title": "Reactions",
+      "fhir": "AllergyIntolerance",
+      "story": [
+        { "type": "paragraph", "id": "reactions00000001",
+          "text": "Allergies / Intolerances. These are substances (Drug, food, or otherwise) that cause a bad reaction when you take, inhale or in some way come in contact with them." },
+        { "type": "scp-reaction", "id": "reactions00000002",
+          "substance": "",
+          "dateOccurred": "",
+          "type": "",
+          "documentedBy": "",
+          "reaction": "",
+          "private": false },
+        { "type": "paragraph", "id": "reactions00000003",
+          "text": "Contraindications. These are substances (such as drugs and food) that interact badly with your condition or medications that you are already taking." },
+        { "type": "scp-contraindication", "id": "reactions00000004",
+          "substance": "",
+          "reason": "",
+          "documentedBy": "",
+          "private": false }
+      ],
+      "journal": [
+        { "type": "create", "item": { "title": "Reactions", "story": [] }, "date": 0 }
+      ]
+    },
+
+    {
+      "slug": "history",
+      "title": "History",
+      "fhir": "Condition (historical) + Procedure + Immunization",
+      "story": [
+        { "type": "paragraph", "id": "history000000001",
+          "text": "Procedures & Surgeries. You can keep track of any procedures and surgeries you have had. These can range from a biopsy to a cat scan to a knee surgery." },
+        { "type": "scp-procedure", "id": "history000000002",
+          "procedure": "",
+          "date": "",
+          "comment": "",
+          "private": false },
+        { "type": "paragraph", "id": "history000000003",
+          "text": "Hospital Visits. You can keep track of any hospital visits you have had, in addition to any you may already have included under procedures and surgeries." },
+        { "type": "scp-hospital-visit", "id": "history000000004",
+          "description": "",
+          "date": "",
+          "comment": "",
+          "private": false },
+        { "type": "paragraph", "id": "history000000005",
+          "text": "Immunizations. Immunizations are vaccines taken to prevent disease. It is important to keep a record of these in case you are ever requested by a serious contagious disease situation." },
+        { "type": "scp-immunization", "id": "history000000006",
+          "vaccine": "",
+          "doseNumber": "",
+          "date": "",
+          "notes": "" }
+      ],
+      "journal": [
+        { "type": "create", "item": { "title": "History", "story": [] }, "date": 0 }
+      ]
+    },
+
+    {
+      "slug": "advanced-directives",
+      "title": "Advanced Directives",
+      "fhir": "DocumentReference",
+      "story": [
+        { "type": "paragraph", "id": "advdir0000000001",
+          "text": "Treatment Preferences: Advance Directives are legal documents that identify your healthcare wishes if you are unable to speak for yourself. Have your healthcare workers fill out, sign and print them within your Shared Care Plan." },
+        { "type": "scp-directive", "id": "advdir0000000002",
+          "documentName": "",
+          "dateSigned": "",
+          "comments": "",
+          "fileRef": "" }
+      ],
+      "journal": [
+        { "type": "create", "item": { "title": "Advanced Directives", "story": [] }, "date": 0 }
+      ]
+    },
+
+    {
+      "slug": "whos-accessed-my-plan",
+      "title": "Who's Accessed My Plan?",
+      "fhir": "Consent + AuditEvent",
+      "story": [
+        { "type": "paragraph", "id": "accesslog00000001",
+          "text": "The following people have viewed your Shared Care Plan. This log is automatically maintained and is readable only by you." },
+        { "type": "scp-access-entry", "id": "accesslog00000002",
+          "accessedBy": "",
+          "accessDate": "",
+          "healthCareFacility": "",
+          "employment": "" }
+      ],
+      "journal": [
+        { "type": "create", "item": { "title": "Who's Accessed My Plan?", "story": [] }, "date": 0 }
+      ]
+    },
+
+    {
+      "slug": "privacy-summary",
+      "title": "Privacy Summary",
+      "fhir": "Consent",
+      "_note": "This page is a view/control surface, not a data page. It displays per-member, per-category hide flags drawn from the AccessRegistry. Not exported as a standalone FedWiki page — rendered from the access grant records.",
+      "story": [
+        { "type": "paragraph", "id": "privacy000000001",
+          "text": "Privacy Summary. This summary is a single view of all your privacy and access settings. Checked means that an item WILL NOT be seen by a particular Care Team member. Unchecked means that an item WILL be seen." },
+        { "type": "scp-privacy-row", "id": "privacy000000002",
+          "careTeamMember": "",
+          "accessLevel": "",
+          "hideDiagnosis": false,
+          "hideMedication": false,
+          "hideMeds": false,
+          "hideReactions": false,
+          "hideImmunizations": false }
+      ],
+      "journal": [
+        { "type": "create", "item": { "title": "Privacy Summary", "story": [] }, "date": 0 }
+      ]
+    }
+
+  ],
+
+  "itemTypes": {
+    "scp-text":               { "fields": ["key", "label", "value", "writtenByOther"] },
+    "scp-field":              { "fields": ["key", "label", "value", "comments"] },
+    "scp-checklist":          { "fields": ["key", "label", "options", "selected", "comments"] },
+    "scp-list":               { "fields": ["key", "label", "items"] },
+    "scp-emergency-contact":  { "fields": ["role", "name", "phone", "alternatePhone"] },
+    "scp-care-team-member":   { "fields": ["name", "contact", "role", "accessLevel", "comments", "appointments", "private"] },
+    "scp-diagnosis":          { "fields": ["diagnosis", "description", "dateDiagnosed", "diagnosedBy", "comments", "private"] },
+    "scp-concerns":           { "fields": ["options", "selected", "otherDetails"] },
+    "scp-goal":               { "fields": ["description", "achieved"] },
+    "scp-next-step":          { "fields": ["date", "goal", "action"] },
+    "scp-health-indicator":   { "fields": ["name", "goal", "unit", "readings"] },
+    "scp-observation":        { "fields": ["indicatorId", "date", "value", "comments"] },
+    "scp-medication":         { "fields": ["medicationType", "startDate", "rxBy", "brandGenericName", "strength", "directions", "use", "timing", "notTakingAsPrescribed", "notTakingReason", "private"] },
+    "scp-reaction":           { "fields": ["substance", "dateOccurred", "type", "documentedBy", "reaction", "private"] },
+    "scp-contraindication":   { "fields": ["substance", "reason", "documentedBy", "private"] },
+    "scp-procedure":          { "fields": ["procedure", "date", "comment", "private"] },
+    "scp-hospital-visit":     { "fields": ["description", "date", "comment", "private"] },
+    "scp-immunization":       { "fields": ["vaccine", "doseNumber", "date", "notes"] },
+    "scp-directive":          { "fields": ["documentName", "dateSigned", "comments", "fileRef"] },
+    "scp-access-entry":       { "fields": ["accessedBy", "accessDate", "healthCareFacility", "employment"] },
+    "scp-privacy-row":        { "fields": ["careTeamMember", "accessLevel", "hideDiagnosis", "hideMedication", "hideMeds", "hideReactions", "hideImmunizations"] }
+  }
+}

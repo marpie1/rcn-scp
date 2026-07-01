@@ -1,0 +1,18 @@
+{
+  "title": "Diagnoses",
+  "story": [
+    {
+      "type": "paragraph",
+      "id": "dx-intro",
+      "text": "Current and past diagnoses. Status: Active, Managed, or Resolved."
+    },
+    {
+      "type": "scp-factory",
+      "id": "factory-diagnoses",
+      "types": ["scp-diagnosis"]
+    }
+  ],
+  "journal": [
+    {"type": "create", "date": 1000000000000, "item": {"title": "Diagnoses"}}
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "title": "Visits",
+  "story": [
+    {
+      "type": "scp-factory",
+      "id": "factory-visits",
+      "position": "top",
+      "types": ["scp-visit"]
+    }
+  ],
+  "journal": [
+    {"type": "create", "date": 1000000000000, "item": {"title": "Visits"}}
+  ]
+}

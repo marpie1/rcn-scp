@@ -1,0 +1,24 @@
+{
+  "name": "groove-workspace",
+  "version": "0.2.0",
+  "description": "Groove Networks recreation with FedWiki integration and libsodium encryption",
+  "main": "server/index.js",
+  "scripts": {
+    "start": "node server/index.js",
+    "dev": "nodemon server/index.js"
+  },
+  "keywords": ["groove", "fedwiki", "collaboration", "p2p", "libsodium"],
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.2",
+    "sql.js": "^1.12.0",
+    "cors": "^2.8.5",
+    "marked": "^11.1.1",
+    "uuid": "^9.0.1",
+    "libsodium-wrappers": "^0.7.13",
+    "node-fetch": "^2.7.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.2"
+  }
+}

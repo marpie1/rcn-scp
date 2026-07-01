@@ -1,0 +1,18 @@
+{
+  "title": "Providers",
+  "story": [
+    {
+      "type": "paragraph",
+      "id": "providers-intro",
+      "text": "Medical providers involved in this patient's care."
+    },
+    {
+      "type": "scp-factory",
+      "id": "factory-providers",
+      "types": ["scp-provider"]
+    }
+  ],
+  "journal": [
+    {"type": "create", "date": 1000000000000, "item": {"title": "Providers"}}
+  ]
+}

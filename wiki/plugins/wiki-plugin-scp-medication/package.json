@@ -1,0 +1,13 @@
+{
+  "name": "wiki-plugin-scp-medication",
+  "version": "0.1.0",
+  "description": "FedWiki plugins for the Shared Care Plan — individually typed items (scp-medication, scp-vital, scp-symptom, scp-visit)",
+  "main": "server/server.js",
+  "keywords": ["wiki", "fedwiki", "plugin", "scp", "shared-care-plan", "health"],
+  "author": "RCN",
+  "license": "MIT",
+  "wiki": {
+    "type": "plugin",
+    "dependencies": {}
+  }
+}

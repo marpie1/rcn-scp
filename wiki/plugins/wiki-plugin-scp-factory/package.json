@@ -1,0 +1,9 @@
+{
+  "name": "wiki-plugin-scp-factory",
+  "version": "0.1.0",
+  "description": "Page-specific persistent add-entry factory for Shared Care Plan pages",
+  "main": "server/server.js",
+  "wiki": {
+    "type": "plugin"
+  }
+}
